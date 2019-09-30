@@ -5,6 +5,7 @@ module Utils (
 import Random
 import System.Random
 import qualified Data.Map as Map
+import Data.Sort
 
 fisherYatesStep :: RandomGen g => (Map.Map Int a, g) -> (Int, a) -> (Map.Map Int a, g)
 fisherYatesStep (m, gen) (i, x) = ((Map.insert j x . Map.insert i (m Map.! j)) m, gen')

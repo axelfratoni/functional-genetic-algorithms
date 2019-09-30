@@ -16,11 +16,13 @@ module GeneticAlgorithm (
     TerminationFunction,
     searchGA,
     initialPopulation,
+    nextGeneration,
     compareFitness,
-    nextGeneration
+    bestChromosome
 ) where
 
 import Random
+import Data.Sort
 
 type Gene = Int
 type Chromosome = [Gene]
@@ -71,8 +73,11 @@ nextGeneration chromSize popSize selecSize pCross fitFun select cross mutate rep
     (crossAll cross s1 pCross chromSize 
     (select selecSize fitFun population))) 
     where (s1:(s2:(s3:rs))) = randSeeds seed
-    
+
 compareFitness :: FitnessFunction -> Chromosome -> Chromosome -> Ordering
 compareFitness fitFun c1 c2 = compare a b where 
     a = fitFun c1
     b = fitFun c2
+
+bestChromosome :: FitnessFunction -> Population -> Chromosome
+bestChromosome fitFun pop = head (sortBy (compareFitness fitFun) pop)
