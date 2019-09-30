@@ -56,10 +56,12 @@ initialPopulation chromSize popSize genChrom s = [genChrom chromSize (rs!!i) | i
 crossAll :: CrossoverFuntion -> Seed -> CrossProbability -> ChromosomeSize -> Population -> Population
 crossAll cross seed pCross chromSize [] = []
 crossAll cross seed pCross chromSize (c:[]) = [c]
-crossAll cross seed pCross chromSize (c:pop) 
-    | pCross > (randBoundedDouble s3 0 1) = (cross s1 chromSize c (head pop)) ++ (crossAll cross s2 pCross chromSize (tail pop))
-    | otherwise = (c:pop) ++ (crossAll cross s2 pCross chromSize (tail pop))
-    where (s1:(s2:(s3:rs))) = randSeeds seed
+crossAll cross seed pCross chromSize (c:pop)
+    | pCross > shouldCross = (cross s1 chromSize c (head pop)) ++ (crossAll cross s2 pCross chromSize (tail pop))
+    | otherwise = c:(crossAll cross s2 pCross chromSize pop) 
+    where 
+        (s1:(s2:(s3:rs))) = randSeeds seed
+        shouldCross = randBoundedDouble s3 0 1
 
 mutateAll :: MutationFunction -> Seed -> ChromosomeSize -> Population -> Population
 mutateAll mutation seed chromSize [] = []
