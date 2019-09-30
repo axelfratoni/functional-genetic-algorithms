@@ -2,10 +2,11 @@ module Random (
     Seed,
     randIntList,
     randInt,
+    randBoundedInt,
     randIntInterval,
     randDoubleList,
     randDouble,
-    randDoubleInterval,
+    randBoundedDouble,
     randSeeds
 ) where
 
@@ -21,8 +22,12 @@ randIntList seed = randoms (mkStdGen seed) :: [Int]
 randInt :: Seed -> Int
 randInt seed = (randIntList seed)!!0
 
-randIntInterval :: Seed -> Int -> Int -> Int
-randIntInterval seed up lo = fst(randomR (lo, up :: Int) (mkStdGen seed))
+randBoundedInt :: Seed -> Int -> Int -> Int
+randBoundedInt seed lo up = fst(randomR (lo, up :: Int) (mkStdGen seed))
+
+randIntInterval :: Seed -> Int -> Int -> (Int, Int)
+randIntInterval seed lo up = (left, fst(randomR (left, up :: Int) s2)) where
+    (left, s2) = randomR (lo, up :: Int) (mkStdGen seed)
 
 randDoubleList :: Seed -> [Double]
 randDoubleList seed = randoms (mkStdGen seed) :: [Double]
@@ -30,8 +35,8 @@ randDoubleList seed = randoms (mkStdGen seed) :: [Double]
 randDouble :: Seed -> Double
 randDouble seed = (randDoubleList seed)!!0
 
-randDoubleInterval :: Seed -> Double -> Double -> Double
-randDoubleInterval seed up lo = fst(randomR (lo, up :: Double) (mkStdGen seed))
+randBoundedDouble :: Seed -> Double -> Double -> Double
+randBoundedDouble seed lo up = fst(randomR (lo, up :: Double) (mkStdGen seed))
 
 randSeeds :: Seed -> [Seed]
 randSeeds seed = randoms (mkStdGen seed) :: [Seed]
