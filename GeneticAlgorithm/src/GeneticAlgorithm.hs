@@ -17,7 +17,8 @@ module GeneticAlgorithm (
     searchGA,
     initialPopulation,
     compareFitness,
-    crossAll
+    crossAll,
+    mutateAll
 ) where
 
 import Random
