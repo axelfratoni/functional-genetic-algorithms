@@ -1,7 +1,10 @@
 module Utils (
-    shuffle
+    shuffle,
+    takeChunk,
+    swapAt
 ) where
 
+import GeneticAlgorithm
 import Random
 import System.Random
 import qualified Data.Map as Map
@@ -23,3 +26,19 @@ fisherYates gen l =
 
 shuffle :: Seed -> [a] -> [a]
 shuffle s l = fst(fisherYates (mkStdGen s) l)
+
+takeChunk :: Int -> Int -> Chromosome -> Chromosome
+takeChunk lo hi ch = takeChunkAux lo hi 0 ch where
+    takeChunkAux lo hi index [] = []
+    takeChunkAux lo hi index (g:ch)
+        | index < lo = takeChunkAux lo hi (index+1) ch
+        | lo <= index && index <= hi = g:(takeChunkAux lo hi (index+1) ch)
+        | otherwise = []
+
+swapAt :: Int -> Int -> Chromosome -> Chromosome
+swapAt a b chrom = swapAux a (chrom!!a) b (chrom!!b) 0 chrom where
+    swapAux a elemA b elemB index [] = []
+    swapAux a elemA b elemB index (ch:chrom)
+        | index == a = elemB:(swapAux a elemA b elemB (index+1) chrom)
+        | index == b = elemA:(swapAux a elemA b elemB (index+1) chrom)
+        | otherwise = ch:(swapAux a elemA b elemB (index+1) chrom)

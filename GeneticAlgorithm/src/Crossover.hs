@@ -4,14 +4,7 @@ module Crossover (
 
 import GeneticAlgorithm
 import Random
-
-takeChunk :: Int -> Int -> Chromosome -> Chromosome
-takeChunk lo hi ch = takeChunkAux lo hi 0 ch where
-    takeChunkAux lo hi index [] = []
-    takeChunkAux lo hi index (g:ch)
-        | index < lo = takeChunkAux lo hi (index+1) ch
-        | lo <= index && index <= hi = g:(takeChunkAux lo hi (index+1) ch)
-        | otherwise = []
+import Utils
 
 orderOneCrossOP :: Int -> Int -> Chromosome -> Chromosome -> Chromosome
 orderOneCrossOP lo hi c1 c2 = insertIntoAux lo hi 0 chu fil where

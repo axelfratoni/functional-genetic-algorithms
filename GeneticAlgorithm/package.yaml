@@ -26,6 +26,8 @@ dependencies:
 - clock
 - time
 - sort
+- hspec
+- QuickCheck
 
 library:
   source-dirs: src
@@ -51,3 +53,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - GeneticAlgorithm
+
+  

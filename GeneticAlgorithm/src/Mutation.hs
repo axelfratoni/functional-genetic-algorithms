@@ -4,14 +4,7 @@ module Mutation (
 
 import GeneticAlgorithm
 import Random
-
-swapAt :: Int -> Int -> Chromosome -> Chromosome
-swapAt a b chrom = swapAux a (chrom!!a) b (chrom!!b) 0 chrom where
-    swapAux a elemA b elemB index [] = []
-    swapAux a elemA b elemB index (ch:chrom)
-        | index == a = elemB:(swapAux a elemA b elemB (index+1) chrom)
-        | index == b = elemA:(swapAux a elemA b elemB (index+1) chrom)
-        | otherwise = ch:(swapAux a elemA b elemB (index+1) chrom)
+import Utils
 
 swapMutation :: MutationFunction
 swapMutation seed chromSize chrom = swapAt index1 index2 chrom where
