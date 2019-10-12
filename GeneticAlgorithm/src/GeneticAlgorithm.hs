@@ -5,6 +5,7 @@ module GeneticAlgorithm (
     ChromosomeSize,
     PopulationSize,
     GenerationNumber,
+    SelectionSize,
     CrossProbability,
     RandomChromosomeFunction,
     FitnessFunction,
